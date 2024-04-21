@@ -1,0 +1,36 @@
+﻿@model IEnumerable<NowPlaying.Models.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@foreach (var item in Model) {
+
+    <div class="jumbotron" style="max-width: 450px;">
+            <h3>  @Html.DisplayFor(modelItem => item.Title)</h3>
+           
+            <p class="p-1">
+                Rating: @Html.DisplayFor(modelItem => item.Rating)
+            </p>
+            <p>
+                RunTime: @Html.DisplayFor(modelItem => item.RunTime)
+            </p>
+
+        <img style="padding: 30px;" src=@Html.DisplayFor(modelItem => item.ImageURL) class="detailImage" />
+
+
+
+        <div style="padding: 30px;">
+                <a class="btn btn-primary btn-lg"  asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-primary btn-lg"  asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-primary btn-lg"  asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </div>
+            </div>
+      
+}
