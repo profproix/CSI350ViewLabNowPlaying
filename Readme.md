@@ -1,40 +1,46 @@
 # Controllers and Routes Lab
 ## Objectives: Students will be able to
-- Review MVC Pattern
-- Build Controller Actions 
-- Create Custome routes 
+- Review Views
+- Create a View Component 
+- Create a Tag Helper
 
 ## Pre-configuration 
 1. Update the connection string in appsetting.json to your local server 
 2. Run update-database. The migrations should already be created.
 3. Verify the Database is set up and that you can run the application.  
 
-## Controller Review 
+## Views Review 
 The following should be a review from last quarter. As such, the instructions will be a bit more vague. 
-Complete the Movie Controller. Since the Model and Views for this controller are already in place, you shouldn't need to make changes outside of the MoviesController File for this section. Test each action as you complete it.
-1. Create an Index Action that gets a list of movies from the Database and renders them to the Index View.
-2. Create a Detail Action that receives an optional id parameter. It should find a movie by that ID and render it in the Detail view. If the Movie is not found, return NotFound();
-3. Create an action that renders the Create View
-4. Create a POST action that recives attirbutes for a Movie. If the Movie is Valid, it should save the Movie to the Database and redirect to the index page to render the Create view again. 
-5. Create an Action that Renders the Edit View.
-6. Create a Post-Edit Action that receives attributes for a Movie. It should find a Movie by its ID, update it in the Database, and redirect back to the index page. If the Movie is not found, return NotFound(); if the Movie is not valid, render the Edit view once more. 
-7. Create an Action that Renders the Delete confirmation page. 
-8. Create a Post with the Action name Delete called DeleteConfirmed that receives an ID. It should find the Movie by its ID, delete it from the Database, and render the Index view. 
+Complete the Movie Edit View 
+1. Use Strongly-typed data in this view by adding `@model NowPlaying.Models.Movie` to the top of the file.
+2. Create an Edit Form; the form should include many built-in tag helpers such as asp-action, asp-validation-summary, and asp-for.
+3. The Form should include a link at the bottom using the asp-action helper that leads back to the Movie Index view. 
+Hint: Check the Create View if you get stuck.
 
-## Custom Routes 
-Create a custom route that includes the movie's rating. 
-1. in Program.cs include this line above the app.MapControllerRoute(...) 
-app.MapControllerRoute(name: "rating",
-                pattern: "movie/{id:int}/{rating?}",
-                defaults: new { controller = "rating", action = "Details" });
-    Note: The id:int is a route constraint
-2. In the Movies controller above the Details action, add  [route ("movie/{id:int}/{rating}")]
-3. In the Index view, update the anchor tag to include this helper asp-route-beds="@item.rating"
-4. Run your code and confirm the custom route is working. You should see something like `Movie/Details/3/PG`
+## Custom Tag Helper
+1. Create a Tag Helper that will display the link to the email used for NowPlaying customer support. `<a href="mailto:NowPlayingCustomerSupport@nowplaying.com">Customer Support</a>`
+Hint: https://learn.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/authoring?view=aspnetcore-8.0
+2. Create a folder called Helpers 
+2. Create a class for your tag called `CustomerSupportTagHelper.cs`
+3. Have CustomeContactTagHelper inherit from TagHelper `public class CustomerSupportTagHelper : TagHelper`
+4. Create an attribute PhoneNumber. ` public string Email { get; set; }`
+5. Process is a TagHelper method allowing us to create our TagHelper. override the method with ` public override void Process(TagHelperContext context, TagHelperOutput output)`
+6. Within the Process method, use output.TagName is used to define the HTML tag we are creating, output.Attributes.SetAttribut is used to set its href to the PhoneNumber and output.Content.SetContent  is used to set the displayed text to PhoneNumber
+```
+            output.TagName = "a";
+            output.Attributes.SetAttribute("href", "mailto: +" + Email);
+            output.Content.SetContent("Customer Support");
+        
+```
+7. _ViewImports.cshtml is where we import our existing helper tags. To import our custom tag, add `@addTagHelper *, NowPlaying` to the file. 
+8. To use the helper in the footer of _Layout.cshtml , we can invoke the helper using the Tags name; our Tag is CustomContactTagHelper, so its tag is <customer-support>. To set the PhoneNumber attribute, we can add an attribute to our helper called 'email'
+```
+    <div class="container">
+            Phone: <customer-support phone-number="000-111-2222"></customer-support>
+        </div>
+```
+
 
 ## Extra Credit (5pt)
-Auth Review:
-Add Authorization restrictions to the Movie controller. Only someone with the Admin role should be able to access the Movie Create, Edit, and Delete functionality.
-
-And/Or Create 2 more custom routes.
-
+Create a Component that creates a dynamic DropDown menu.
+Hint: https://www.youtube.com/watch?v=zK_3GQRipUM&ab_channel=JustPickandLearn

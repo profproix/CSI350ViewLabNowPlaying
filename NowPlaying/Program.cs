@@ -30,6 +30,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
+app.MapControllerRoute(name: "rating",
+                pattern: "movie/{id:int}/{rating?}",
+                defaults: new { controller = "rating", action = "Details" });
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Movies}/{action=Index}/{id?}");

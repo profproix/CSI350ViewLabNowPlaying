@@ -28,7 +28,7 @@
 
         <div style="padding: 30px;">
                 <a class="btn btn-primary btn-lg"  asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-primary btn-lg"  asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a class="btn btn-primary btn-lg" asp-action="Details" asp-route-id="@item.Id" asp-route-rating="@item.Rating">Details</a> |
                 <a class="btn btn-primary btn-lg"  asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </div>
             </div>
