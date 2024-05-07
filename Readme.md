@@ -1,4 +1,4 @@
-# Controllers and Routes Lab
+# Controllers and Views Lab
 ## Objectives: Students will be able to
 - Review Views
 - Create a View Component 
