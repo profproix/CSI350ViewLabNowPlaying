@@ -23,9 +23,9 @@ Hint: https://learn.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/author
 2. Create a folder called Helpers 
 2. Create a class for your tag called `CustomerSupportTagHelper.cs`
 3. Have CustomeContactTagHelper inherit from TagHelper `public class CustomerSupportTagHelper : TagHelper`
-4. Create an attribute PhoneNumber. ` public string Email { get; set; }`
+4. Create an attribute Email. ` public string Email { get; set; }`
 5. Process is a TagHelper method allowing us to create our TagHelper. override the method with ` public override void Process(TagHelperContext context, TagHelperOutput output)`
-6. Within the Process method, use output.TagName is used to define the HTML tag we are creating, output.Attributes.SetAttribut is used to set its href to the PhoneNumber and output.Content.SetContent  is used to set the displayed text to PhoneNumber
+6. Within the Process method, use output.TagName is used to define the HTML tag we are creating, output.Attributes.SetAttribut is used to set its href to the Email and output.Content.SetContent  is used to set the displayed text to Email
 ```
             output.TagName = "a";
             output.Attributes.SetAttribute("href", "mailto: +" + Email);
@@ -36,7 +36,7 @@ Hint: https://learn.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/author
 8. To use the helper in the footer of _Layout.cshtml , we can invoke the helper using the Tags name; our Tag is CustomContactTagHelper, so its tag is <customer-support>. To set the PhoneNumber attribute, we can add an attribute to our helper called 'email'
 ```
     <div class="container">
-            Phone: <customer-support phone-number="000-111-2222"></customer-support>
+            Email: <customer-support email="CustomerService@nowplay.com"></customer-support>
         </div>
 ```
 
